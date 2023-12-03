@@ -3,10 +3,7 @@ import {} from 'vue'
 </script>
 
 <template>
-  <div>
-    <!-- 路由出口 -->
-    <router-view></router-view>
-  </div>
+  <div>登录页</div>
 </template>
 
 <style lang="scss" scoped></style>
