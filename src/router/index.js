@@ -1,6 +1,6 @@
 // 引入 Vue Router 的相关函数
 import { createRouter, createWebHistory } from 'vue-router'
-
+import { useUserStore } from '@/stores/user'
 // 创建路由实例
 const router = createRouter({
   // 使用 Web History 模式，需要服务器配置支持
@@ -42,6 +42,13 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+// 路由守卫
+router.beforeEach((to) => {
+  // 判断useStore.token是否存在，如果不存在且to.path不等于'/login'，则返回'/login'
+  const useStore = useUserStore()
+  if (!useStore.token && to.path !== '/login') return '/login'
 })
 
 // 导出路由实例
