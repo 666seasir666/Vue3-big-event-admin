@@ -18,12 +18,56 @@ import {
   CaretBottom
 } from '@element-plus/icons-vue'
 import avatar from '@/assets/default.png'
-import { useUserStore } from '@/stores/user.js'
-import { onMounted } from 'vue'
-const userStore = useUserStore()
+
+import { useUserStore } from '@/stores' //导入stores下面的用户仓库
+import { onMounted } from 'vue' //导入onMounted方法
+// import router from '../../router'
+import { useRouter } from 'vue-router'
+
+const userStore = useUserStore() // 创建一个用户仓库实例
+const router = useRouter() // 创建一个路由实例
+
+// 监听用户仓库中的用户基本信息并渲染
 onMounted(() => {
-  userStore.getUserInfo()
+  userStore.getUser() // 当组件加载完成时调用
 })
+
+//用户信息下拉菜单退出登录和路由跳转
+const handleCommand = async (key) => {
+  // 判断用户点击的图标
+  if (key === 'logout') {
+    try {
+      await ElMessageBox.confirm('确定要退出登录吗？', '温馨提示', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+        draggable: true // 是否可以拖拽
+      })
+
+      // 用户点击了确认按钮
+      ElMessage({
+        type: 'success',
+        message: '退出成功'
+      })
+
+      // 退出操作
+      userStore.removeToken() // 调用 removeToken 函数，用于移除用户信息 token
+      userStore.setUser({}) // 重置用户信息
+      router.push('/login') // 跳转登录页面
+    } catch (error) {
+      // 用户点击了取消按钮
+      ElMessage({
+        type: 'info',
+        message: '用户取消操作'
+      })
+      // 如果点击取消，可以选择在这里返回或执行其他操作
+      return
+    }
+  } else {
+    // 跳转到对应的路由
+    router.push(`/user/${key}`)
+  }
+}
 </script>
 
 <template>
@@ -80,12 +124,18 @@ onMounted(() => {
 
     <el-container>
       <el-header>
-        <div>用户昵称：<strong>小帅</strong></div>
-        <el-dropdown placement="bottom-end">
+        <div>
+          用户昵称：<strong>{{
+            userStore.user.nickname || userStore.user.username
+          }}</strong>
+        </div>
+        <!-- 用户头像 -->
+        <el-dropdown placement="bottom-end" @command="handleCommand">
           <span class="el-dropdown__box">
-            <el-avatar :src="avatar" />
+            <el-avatar :src="userStore.user.user_pic || avatar" />
             <el-icon><CaretBottom /></el-icon>
           </span>
+          <!-- 用户下拉菜单 -->
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="profile" :icon="User"

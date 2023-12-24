@@ -1,5 +1,5 @@
 // 引入用户存储和其他依赖
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores'
 import axios from 'axios'
 import router from '@/router'
 import { ElMessage } from 'element-plus'

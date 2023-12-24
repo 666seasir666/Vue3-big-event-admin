@@ -1,6 +1,6 @@
 // 引入 Vue Router 的相关函数
 import { createRouter, createWebHistory } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores'
 // 创建路由实例
 const router = createRouter({
   // 使用 Web History 模式，需要服务器配置支持

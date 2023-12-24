@@ -6,7 +6,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 // 引入 Vue 相关功能
 import { ref, watch } from 'vue'
 // 引入用户状态管理工具
-import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores'
 // 引入 Vue Router
 import { useRouter } from 'vue-router'
 // 创建一个响应式变量，用于表示当前操作是否为注册操作
