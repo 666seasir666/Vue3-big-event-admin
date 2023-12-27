@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { artGetChannelsService } from '@/api/article/article.js'
 import { Edit, Delete } from '@element-plus/icons-vue'
-import ChannelEdit from './components/ChannelEdit.vue'
+import ChannelEdit from '@/views/article/components/ChannelEdit.vue' // 导入 ChannelEdit 组件
 
 // 表单数组
 const channelList = ref([])
@@ -16,25 +16,28 @@ const getChannelList = async () => {
   channelList.value = data.data // 赋值给表单数组
   loading.value = false // 结束加载动画
 }
-getChannelList()
+getChannelList() // 调用获取频道列表的方法
 
-const onDeletechannel = (row, $index) => {
+const onDelChannel = (row, $index) => {
   console.log(row, $index)
 }
 
-const onEditchannel = (row) => {
-  dialog.value.open({ row })
-}
-
-const onaddChannel = () => {
+const onAddChannel = () => {
   dialog.value.open({})
 }
+const onEditChannel = (row) => {
+  dialog.value.open(row)
+}
+
+const onSuccess = () => {
+  getChannelList()
+} // 监听子组件的关闭事件
 </script>
 
 <template>
   <PageContainer title="文章分类">
     <template #extra>
-      <el-button @click="onaddChannel" tpye="primary"> 添加分类 </el-button>
+      <el-button @click="onAddChannel" type="primary"> 添加分类 </el-button>
     </template>
     <el-table v-loading="loading" :data="channelList" style="width: 100%">
       <el-table-column type="index" label="序号" width="100"></el-table-column>
@@ -47,14 +50,14 @@ const onaddChannel = () => {
             :icon="Edit"
             round
             plain
-            @click="onEditchannel(row, $index)"
+            @click="onEditChannel(row, $index)"
           ></el-button>
           <el-button
             type="danger"
             :icon="Delete"
             round
             plain
-            @click="onDeletechannel(row, $index)"
+            @click="onDelChannel(row, $index)"
           ></el-button>
         </template>
       </el-table-column>
@@ -65,7 +68,7 @@ const onaddChannel = () => {
     </el-table>
 
     <!-- Dialog 对话框弹层组件 -->
-    <ChannelEdit ref="dialog"></ChannelEdit>
+    <Channel-Edit ref="dialog" @success="onSuccess"></Channel-Edit>
   </PageContainer>
 </template>
 
