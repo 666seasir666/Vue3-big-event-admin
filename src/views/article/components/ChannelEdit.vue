@@ -51,12 +51,7 @@ const onSubmit = async () => {
     ElMessage.success('添加成功')
   }
   dialogVisible.value = false // 关闭对话框
-  emit('success', isEdit) // 触发自定义事件，传递数据给父组件
-  // formRef.value.resetFields() // 重置表单
-  // formModel.value = { // 重置数据
-  //   cate_name: '',
-  //   cate_alias: ''
-  // }
+  emit('success') // 触发自定义事件，传递数据给父组件
 } // 定义提交表单事件
 
 // 向外暴露方法
@@ -95,7 +90,7 @@ defineExpose({
     <!-- footer 插槽 -->
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible">取消</el-button>
+        <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="onSubmit"> 确认 </el-button>
       </span>
     </template>

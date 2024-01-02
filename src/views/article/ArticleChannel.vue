@@ -23,7 +23,7 @@ getChannelList() // 调用获取频道列表的方法
 
 const onDelChannel = async (row) => {
   try {
-    await ElMessageBox.confirm('确定删除该分类?', '温馨提示', {
+    await ElMessageBox.confirm('确定删除该分类名称?', '温馨提示', {
       confirmButtonText: '确认',
       cancelButtonText: '取消',
       type: 'warning',
@@ -38,7 +38,7 @@ const onDelChannel = async (row) => {
     // 用户点击取消按钮或右上角×时
     ElMessage({
       type: 'info',
-      message: '用户取消操作'
+      message: '取消操作'
     })
     // 阻止删除
   }
