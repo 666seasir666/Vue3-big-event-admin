@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue'
-import { artGetChannelsService } from '@/api/article/article.js'
+import {
+  artGetChannelService,
+  artDeleteChannelService
+} from '@/api/article/article.js'
 import { Edit, Delete } from '@element-plus/icons-vue'
 import ChannelEdit from '@/views/article/components/ChannelEdit.vue' // 导入 ChannelEdit 组件
 
@@ -12,14 +15,33 @@ const dialog = ref() //定义弹窗
 
 const getChannelList = async () => {
   loading.value = true // 开始加载动画
-  const { data } = await artGetChannelsService() // 请求后台数据
+  const { data } = await artGetChannelService() // 请求后台数据
   channelList.value = data.data // 赋值给表单数组
   loading.value = false // 结束加载动画
 }
 getChannelList() // 调用获取频道列表的方法
 
-const onDelChannel = (row, $index) => {
-  console.log(row, $index)
+const onDelChannel = async (row) => {
+  try {
+    await ElMessageBox.confirm('确定删除该分类?', '温馨提示', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+      draggable: true // 是否可以拖拽
+    })
+
+    // 用户点击确认按钮时
+    await artDeleteChannelService(row.id) // 删除文章分类
+    ElMessage.success('删除成功')
+    getChannelList() // 调用获取频道列表的方法
+  } catch (error) {
+    // 用户点击取消按钮或右上角×时
+    ElMessage({
+      type: 'info',
+      message: '用户取消操作'
+    })
+    // 阻止删除
+  }
 }
 
 const onAddChannel = () => {

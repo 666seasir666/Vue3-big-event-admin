@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import {
-  artEditChannelsService,
-  artAddChannelsService
+  artEditChannelService,
+  artAddChannelService
 } from '@/api/article/article.js'
 
 const dialogVisible = ref(false) // 定义对话框显示状态
@@ -43,11 +43,11 @@ const onSubmit = async () => {
   const isEdit = formModel.value.id // 是否有id，判断是编辑还是新增
   if (isEdit) {
     // 编辑
-    await artEditChannelsService(formModel.value)
+    await artEditChannelService(formModel.value)
     ElMessage.success('编辑成功')
   } else {
     // 新增
-    await artAddChannelsService(formModel.value)
+    await artAddChannelService(formModel.value)
     ElMessage.success('添加成功')
   }
   dialogVisible.value = false // 关闭对话框
