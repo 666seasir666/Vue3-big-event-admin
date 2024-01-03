@@ -6,6 +6,8 @@ import { Edit, Delete } from '@element-plus/icons-vue'
 import ChannelSelect from './components/ChannelSelect.vue'
 // 引入文章列表请求的接口数据
 import { artGetArticleListService } from '@/api/article/article.js'
+// 导入封装格式化日期函数
+import { formatTime } from '@/utils/format.js'
 
 // 定义请求参数对象
 const params = ref({
@@ -72,7 +74,9 @@ const onDeleteArticle = (row) => {
         </template>
       </el-table-column>
       <el-table-column label="分类" prop="cate_name"></el-table-column>
-      <el-table-column label="发表时间" prop="pub_date"> </el-table-column>
+      <el-table-column label="发表时间" prop="pub_date">
+        <template #default="{ row }">{{ formatTime(row.pub_date) }}</template>
+      </el-table-column>
       <el-table-column label="状态" prop="state"></el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="{ row }">
@@ -96,6 +100,10 @@ const onDeleteArticle = (row) => {
           </el-button>
         </template>
       </el-table-column>
+
+      <template #empty>
+        <el-empty description="暂无数据" />
+      </template>
     </el-table>
   </PageContainer>
 </template>
