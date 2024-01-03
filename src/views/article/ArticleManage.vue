@@ -8,6 +8,8 @@ import ChannelSelect from './components/ChannelSelect.vue'
 import { artGetArticleListService } from '@/api/article/article.js'
 // 导入封装格式化日期函数
 import { formatTime } from '@/utils/format.js'
+// 引入 Loading 服务
+import { ElLoading } from 'element-plus'
 
 // 定义请求参数对象
 const params = ref({
@@ -20,14 +22,22 @@ const params = ref({
 
 const articleList = ref([]) //文章列表数据，初始为空数组
 const total = ref(0) // 总文章数量，初始为0
+const loading = ref(false)
 
 const getArticleList = async () => {
+  const loading = ElLoading.service({
+    // 加载数据时显示全屏 "loading" 动画
+    lock: true,
+    text: 'Loading',
+    background: 'rgba(0, 0, 0, 0.7)'
+  })
+
   // 发送获取文章列表的请求
   const res = await artGetArticleListService(params.value)
-
   // 将返回的数据赋值给articleList和total
   articleList.value = res.data.data
   total.value = res.data.total
+  loading.close() //返回一个 Loading 实例，可通过调用该实例的 close 方法来关闭它
 }
 getArticleList() //调用文章列表函数
 
@@ -79,7 +89,11 @@ const onDeleteArticle = (row) => {
       </el-form-item>
     </el-form>
     <!-- 表格区域 -->
-    <el-table :data="articleList" style="width: 100%">
+    <el-table
+      :data="articleList"
+      v-loading.fullscreen.lock="loading"
+      style="width: 100%"
+    >
       <el-table-column label="文章标题" prop="title" width="400">
         <template #default="{ row }">
           <el-link type="primary" :underline="false">{{ row.title }}</el-link>
