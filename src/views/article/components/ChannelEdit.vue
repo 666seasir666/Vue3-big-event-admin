@@ -66,6 +66,7 @@ defineExpose({
     v-model="dialogVisible"
     :title="formModel.id ? '编辑分类' : '添加分类'"
     width="30%"
+    :draggable="true"
   >
     <el-form
       ref="formRef"
