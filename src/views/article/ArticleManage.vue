@@ -48,11 +48,25 @@ const onSizeChange = (size) => {
   getArticleList() // 重新获取文章列表
 }
 
+// 处理页码逻辑
 const onCurrentChange = (page) => {
   params.value.pagesize = page // 更新当前页码
   getArticleList() // 重新获取文章列表
 }
 
+// 搜索逻辑
+const onSearch = () => {
+  params.value.pagenum = 1 // 重置为第一页
+  getArticleList() // 重新获取文章列表
+}
+
+// 重置逻辑
+const onReset = () => {
+  params.value.pagenum = 1 // 重置为第一页
+  params.value.cate_id = '' // 重置分类id为空
+  params.value.state = '' // 重置文章状态为空
+  getArticleList() // 重新获取文章列表
+}
 // 编辑逻辑
 const onEditArticle = (row) => {
   console.log('编辑逻辑', row)
@@ -84,8 +98,8 @@ const onDeleteArticle = (row) => {
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary">搜索</el-button>
-        <el-button>重置</el-button>
+        <el-button type="primary" @click="onSearch">搜索</el-button>
+        <el-button @click="onReset">重置</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格区域 -->
