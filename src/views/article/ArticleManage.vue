@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Edit, Delete } from '@element-plus/icons-vue'
+import ChannelSelect from './components/ChannelSelect.vue'
 
 // 假数据
 const articleList = ref([
@@ -20,12 +21,26 @@ const articleList = ref([
   }
 ])
 
+// 定义请求参数对象
+const params = ref({
+  // 分页参数
+  pagenum: 1,
+  // 每页显示数量
+  pagesize: 5,
+  // 分类id
+  cate_id: '',
+  // 状态
+  state: ''
+})
+
+// 编辑逻辑
 const onEditArticle = (row) => {
-  console.log('编辑文章', row)
+  console.log('编辑逻辑', row)
 }
 
+// 删除逻辑
 const onDeleteArticle = (row) => {
-  console.log('编辑文章', row)
+  console.log('删除文章', row)
 }
 </script>
 
@@ -38,14 +53,11 @@ const onDeleteArticle = (row) => {
     <!-- 表单区域 -->
     <el-form :inline="true">
       <el-form-item label="文章分类">
-        <el-select>
-          <el-option label="北京" value="110" />
-          <el-option label="广州" value="137" />
-        </el-select>
+        <channel-select v-model="params.cate_id"></channel-select>
       </el-form-item>
 
       <el-form-item label="发布状态">
-        <el-select>
+        <el-select v-model="params.state">
           <el-option label="已发布" value="已发布"></el-option>
           <el-option label="草稿" value="草稿"></el-option>
         </el-select>
