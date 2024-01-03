@@ -1,37 +1,33 @@
 <script setup>
 import { ref } from 'vue'
+// 引入element-plus编辑和删除图标
 import { Edit, Delete } from '@element-plus/icons-vue'
+// 引入文章分类下拉选择组件
 import ChannelSelect from './components/ChannelSelect.vue'
-
-// 假数据
-const articleList = ref([
-  {
-    id: 5961,
-    title: '新的文章啊',
-    pub_date: '2022-07-10 14:53:52.604',
-    state: '已发布',
-    cate_name: '体育'
-  },
-  {
-    id: 5962,
-    title: 'test',
-    pub_date: '2022-07-10 14:54:30.904',
-    state: '草稿',
-    cate_name: '体育'
-  }
-])
+// 引入文章列表请求的接口数据
+import { artGetArticleListService } from '@/api/article/article.js'
 
 // 定义请求参数对象
 const params = ref({
   // 分页参数
-  pagenum: 1,
-  // 每页显示数量
-  pagesize: 5,
-  // 分类id
-  cate_id: '',
-  // 状态
-  state: ''
+  pagenum: 1, // 当前页码，默认为第一页
+  pagesize: 5, // 每页显示数量，默认为5条
+  cate_id: '', // 分类id，初始为空
+  state: '' // 文章状态，初始为空
 })
+
+const articleList = ref([]) //文章列表数据，初始为空数组
+const total = ref(0) // 总文章数量，初始为0
+
+const getArticleList = async () => {
+  // 发送获取文章列表的请求
+  const res = await artGetArticleListService(params.value)
+
+  // 将返回的数据赋值给articleList和total
+  articleList.value = res.data.data
+  total.value = res.data.total
+}
+getArticleList() //调用文章列表函数
 
 // 编辑逻辑
 const onEditArticle = (row) => {
