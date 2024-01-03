@@ -38,7 +38,7 @@ const onDelChannel = async (row) => {
     // 用户点击取消按钮或右上角×时
     ElMessage({
       type: 'info',
-      message: '取消操作'
+      message: '取消删除操作'
     })
     // 阻止删除
   }

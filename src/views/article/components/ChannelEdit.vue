@@ -61,6 +61,15 @@ const onSubmit = async () => {
   }
 } // 定义提交表单事件
 
+const closeDialog = () => {
+  dialogVisible.value = false
+  if (formModel.value.id) {
+    ElMessage.info('取消编辑分类') // 显示取消编辑分类提示
+  } else {
+    ElMessage.info('取消添加分类') // 显示取消添加分类提示
+  }
+} //定义取消提示框
+
 // 向外暴露方法
 defineExpose({
   open
@@ -73,7 +82,10 @@ defineExpose({
     v-model="dialogVisible"
     :title="formModel.id ? '编辑分类' : '添加分类'"
     width="30%"
+    align-center
     :draggable="true"
+    :modal="false"
+    :append-to-body="true"
   >
     <el-form
       ref="formRef"
@@ -98,7 +110,7 @@ defineExpose({
     <!-- footer 插槽 -->
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button @click="closeDialog">取消</el-button>
         <el-button type="primary" @click="onSubmit"> 确认 </el-button>
       </span>
     </template>
