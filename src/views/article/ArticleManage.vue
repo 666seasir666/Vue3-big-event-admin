@@ -31,6 +31,18 @@ const getArticleList = async () => {
 }
 getArticleList() //调用文章列表函数
 
+// 处理分页逻辑
+const onSizeChange = (size) => {
+  params.value.pagenum = 1 // 重置为第一页
+  params.value.pagesize = size // 更新每页显示数量
+  getArticleList() // 重新获取文章列表
+}
+
+const onCurrentChange = (page) => {
+  params.value.pagesize = page // 更新当前页码
+  getArticleList() // 重新获取文章列表
+}
+
 // 编辑逻辑
 const onEditArticle = (row) => {
   console.log('编辑逻辑', row)
@@ -100,11 +112,25 @@ const onDeleteArticle = (row) => {
           </el-button>
         </template>
       </el-table-column>
-
+      <!-- 暂无数据显示el-empty -->
       <template #empty>
         <el-empty description="暂无数据" />
       </template>
     </el-table>
+    <!-- 分页区域 -->
+    <el-pagination
+      v-model:current-page="params.pagenum"
+      v-model:page-size="params.pagesize"
+      :page-sizes="[2, 4, 6, 10]"
+      :background="true"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      :hide-on-single-page="true"
+      :pager-count="2"
+      @size-change="onSizeChange"
+      @current-change="onCurrentChange"
+      style="margin-top: 20px; justify-content: center"
+    />
   </PageContainer>
 </template>
 
