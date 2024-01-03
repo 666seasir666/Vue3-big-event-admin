@@ -68,6 +68,7 @@ const onDeleteArticle = (row) => {
       <el-table-column label="状态" prop="state"></el-table-column>
       <el-table-column label="操作" width="150">
         <template #default="{ row }">
+          <!-- 编辑按钮 -->
           <el-button
             type="primary"
             :icon="Edit"
@@ -76,6 +77,7 @@ const onDeleteArticle = (row) => {
             @click="onEditArticle(row)"
           >
           </el-button>
+          <!-- 删除按钮 -->
           <el-button
             type="danger"
             :icon="Delete"
