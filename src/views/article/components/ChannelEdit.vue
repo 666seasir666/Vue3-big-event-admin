@@ -6,7 +6,7 @@ import {
 } from '@/api/article/article.js'
 
 const dialogVisible = ref(false) // 定义对话框显示状态
-const formRef = ref() // 定义表单引用对象
+const formRef = ref(null) // 定义表单引用对象，使用 ref 创建
 
 const formModel = ref({
   cate_name: '',
@@ -35,23 +35,30 @@ const rules = {
 const open = async (row) => {
   dialogVisible.value = true // 打开对话框
   formModel.value = { ...row } // 如果有数据，则进行数据回显
+  if (formRef.value) {
+    formRef.value.clearValidate() // 在确保 formRef 存在时调用 clearValidate
+  }
 } // 定义打开对话框方法
 
 const emit = defineEmits(['success']) // 定义触发父组件事件的方法
 const onSubmit = async () => {
-  await formRef.value.validate() // 表单验证
-  const isEdit = formModel.value.id // 是否有id，判断是编辑还是新增
-  if (isEdit) {
-    // 编辑
-    await artEditChannelService(formModel.value)
-    ElMessage.success('编辑成功')
-  } else {
-    // 新增
-    await artAddChannelService(formModel.value)
-    ElMessage.success('添加成功')
+  try {
+    await formRef.value.validate() // 表单验证
+    const isEdit = formModel.value.id // 是否有id，判断是编辑还是新增
+    if (isEdit) {
+      // 编辑
+      await artEditChannelService(formModel.value)
+      ElMessage.success('编辑成功')
+    } else {
+      // 新增
+      await artAddChannelService(formModel.value)
+      ElMessage.success('添加成功')
+    }
+    dialogVisible.value = false // 关闭对话框
+    emit('success') // 触发自定义事件，传递数据给父组件
+  } catch (error) {
+    ElMessage.error('请检查您的输入信息是否正确')
   }
-  dialogVisible.value = false // 关闭对话框
-  emit('success') // 触发自定义事件，传递数据给父组件
 } // 定义提交表单事件
 
 // 向外暴露方法
