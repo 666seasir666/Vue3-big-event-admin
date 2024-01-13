@@ -10,6 +10,7 @@ import { artGetArticleListService } from '@/api/article/article.js'
 import { formatTime } from '@/utils/format.js'
 // 引入 Loading 服务
 import { ElLoading } from 'element-plus'
+import ArticleEdit from './components/ArticleEdit.vue'
 
 // 定义请求参数对象
 const params = ref({
@@ -31,13 +32,17 @@ const getArticleList = async () => {
     text: 'Loading',
     background: 'rgba(0, 0, 0, 0.7)'
   })
-
+  setTimeout(() => {
+    loading.close()
+  }, 2000)
   // 发送获取文章列表的请求
   const res = await artGetArticleListService(params.value)
   // 将返回的数据赋值给articleList和total
   articleList.value = res.data.data
+
   total.value = res.data.total
-  loading.close() //返回一个 Loading 实例，可通过调用该实例的 close 方法来关闭它
+  // loading.close() //返回一个 Loading 实例，可通过调用该实例的 close 方法来关闭它
+  loading.value = false //关闭loading
 }
 getArticleList() //调用文章列表函数
 
@@ -67,9 +72,14 @@ const onReset = () => {
   params.value.state = '' // 重置文章状态为空
   getArticleList() // 重新获取文章列表
 }
-// 编辑逻辑
+const articleEditRef = ref()
+// 添加文章管理逻辑
+const onAddArticle = () => {
+  articleEditRef.value.open({})
+}
+// 编辑文章管理逻辑
 const onEditArticle = (row) => {
-  console.log('编辑逻辑', row)
+  articleEditRef.value.open(row)
 }
 
 // 删除逻辑
@@ -81,7 +91,7 @@ const onDeleteArticle = (row) => {
 <template>
   <PageContainer title="文章管理">
     <template #extra>
-      <el-button tpye="primary"> 添加管理 </el-button>
+      <el-button type="primary" @click="onAddArticle"> 添加管理 </el-button>
     </template>
 
     <!-- 表单区域 -->
@@ -159,6 +169,8 @@ const onDeleteArticle = (row) => {
       @current-change="onCurrentChange"
       style="margin-top: 20px; justify-content: center"
     />
+    <!-- 添加文章弹窗 -->
+    <ArticleEdit ref="articleEditRef"></ArticleEdit>
   </PageContainer>
 </template>
 
