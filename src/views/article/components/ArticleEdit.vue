@@ -5,7 +5,8 @@ import ChannelSelect from './ChannelSelect.vue'
 // 导入Plus图标
 import { Plus } from '@element-plus/icons-vue'
 // 导入QuillEditor组件
-import { QuillEditor } from '@vueup/vue-quill'
+import { defineEmits } from 'vue'
+
 // 导入QuillEditor的样式
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 // 导入添加/发布文章/获取文章详情/编辑文章详情
