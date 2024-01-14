@@ -1,9 +1,13 @@
 <script setup>
 import { ref } from 'vue'
+// 导入ChannelSelect组件
 import ChannelSelect from './ChannelSelect.vue'
+// 导入Plus图标
 import { Plus } from '@element-plus/icons-vue'
-
-const input = ref('')
+// 导入QuillEditor组件
+import { QuillEditor } from '@vueup/vue-quill'
+// 导入QuillEditor的样式
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const visbleDrawer = ref(false) // 控制添加管理弹窗的显示与隐藏
 
@@ -53,7 +57,11 @@ defineExpose({
     <!-- 发表文章表单 -->
     <el-form :model="formModel" ref="formRef" label-width="100px">
       <el-form-item label="标题名称:">
-        <el-input v-model="input" placeholder="请输入文章标题" clearable />
+        <el-input
+          v-model="formModel.title"
+          placeholder="请输入文章标题"
+          clearable
+        />
       </el-form-item>
       <el-form-item label="文章分类:">
         <channel-select
@@ -76,7 +84,10 @@ defineExpose({
         </el-upload>
       </el-form-item>
       <el-form-item label="文章内容" prop="content">
-        <div class="editor">富文本编辑器</div>
+        <div class="editor">
+          <quill-editor theme="snow" v-model:content="formModel.content">
+          </quill-editor>
+        </div>
       </el-form-item>
       <el-form-item>
         <el-button type="primary">发布</el-button>
@@ -90,8 +101,8 @@ defineExpose({
 .avatar-uploader {
   :deep() {
     .avatar {
-      width: 178px;
-      height: 178px;
+      width: 100%;
+      height: 100%;
       display: block;
     }
     .el-upload {
@@ -112,6 +123,12 @@ defineExpose({
       height: 178px;
       text-align: center;
     }
+  }
+}
+.editor {
+  width: 100%;
+  :deep(.ql-editor) {
+    min-height: 200px;
   }
 }
 </style>
