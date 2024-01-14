@@ -25,6 +25,20 @@ export const artDeleteChannelService = (id) =>
 export const artGetArticleListService = (params) =>
   request.get('/my/article/list', { params })
 
-// 文章：添加文章
+// 文章：添加/发布文章
 // 接口地址：https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850059
 export const artPublishService = (data) => request.post('/my/article/add', data)
+
+// 文章：获取文章详情
+// 接口地址：https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850060
+export const artGetDetailService = (id) =>
+  request.get('/my/article/info', { params: { id } })
+
+// 文章：编辑文章详情
+// 接口地址：https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850973
+export const artEditService = (data) => request.put('my/article/info', data)
+
+// 文章：删除文章
+// 接口地址：https://apifox.com/apidoc/shared-26c67aee-0233-4d23-aab7-08448fdf95ff/api-93850061
+export const artDelService = (id) =>
+  request.delete('my/article/info', { params: { id } })

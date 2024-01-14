@@ -8,9 +8,11 @@ import ChannelSelect from './components/ChannelSelect.vue'
 import { artGetArticleListService } from '@/api/article/article.js'
 // 导入封装格式化日期函数
 import { formatTime } from '@/utils/format.js'
-// 引入 Loading 服务
+// 导入 Loading 服务
 import { ElLoading } from 'element-plus'
 import ArticleEdit from './components/ArticleEdit.vue'
+// 导入删除文章接口
+import { artDelService } from '@/api/article/article.js'
 
 // 定义请求参数对象
 const params = ref({
@@ -83,8 +85,25 @@ const onEditArticle = (row) => {
 }
 
 // 删除逻辑
-const onDeleteArticle = (row) => {
-  console.log('删除文章', row)
+const onDeleteArticle = async (row) => {
+  try {
+    await ElMessageBox.confirm('你确认删除该文章信息吗？', '温馨提示', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+      draggable: true // 是否可以拖拽
+    })
+    await artDelService(row.id) // 删除文章信息
+    ElMessage({ type: 'success', message: '删除成功' })
+    getArticleList() //重新获取文章列表
+  } catch (error) {
+    // 用户点击取消按钮或右上角×时
+    ElMessage({
+      type: 'info',
+      message: '取消删除文章信息'
+    })
+    // 阻止删除
+  }
 }
 
 // 添加或者编辑成功回调
