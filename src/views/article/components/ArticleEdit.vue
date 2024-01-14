@@ -22,6 +22,13 @@ const defaultFrom = {
 // 准备数据
 const formModel = ref({ ...defaultFrom })
 
+const rules = {
+  title: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
+  cate_id: [{ required: true, message: '请选择文章分类', trigger: 'blur' }],
+  content: [{ required: true, message: '请输入文章内容', trigger: 'blur' }],
+  cover_img: [{ required: true, message: '请选择文章封面', trigger: 'change' }]
+} // 表单验证规则
+
 //图片上传相关逻辑
 const imgUrl = ref('')
 // 定义一个函数，用于处理上传的文件
@@ -32,8 +39,10 @@ const onUploadFile = (uploadFile) => {
 const open = (row) => {
   visbleDrawer.value = true // 显示弹窗
   if (row.id) {
+    // 如果有id，则表示是编辑操作
     console.log('编辑回显')
   } else {
+    // 如果没有id，则表示是添加操作
     formModel.value = { ...defaultFrom }
     console.log('添加')
   }
@@ -55,15 +64,20 @@ defineExpose({
     :align-center="true"
   >
     <!-- 发表文章表单 -->
-    <el-form :model="formModel" ref="formRef" label-width="100px">
-      <el-form-item label="标题名称:">
+    <el-form
+      :rules="rules"
+      :model="formModel"
+      ref="formRef"
+      label-width="100px"
+    >
+      <el-form-item label="标题名称:" prop="title">
         <el-input
           v-model="formModel.title"
           placeholder="请输入文章标题"
           clearable
         />
       </el-form-item>
-      <el-form-item label="文章分类:">
+      <el-form-item label="文章分类:" prop="cate_id">
         <channel-select
           v-model="formModel.cate_id"
           width="100%"
