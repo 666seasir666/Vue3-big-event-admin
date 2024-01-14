@@ -6,6 +6,10 @@ defineProps({
   // 定义一个属性modelValue，类型为Number或String
   modelValue: {
     type: [Number, String]
+  },
+  // 定义一个属性width，类型为String
+  width: {
+    type: String
   }
 })
 
@@ -27,6 +31,7 @@ getChannelList() // 调用getChannelList函数，获取取文章分类列表
   <el-select
     :modelValue="modelValue"
     @update:modelValue="emit('update:modelValue', $event)"
+    :style="{ width }"
   >
     <!-- [:key="channel.id"]: 设置每个 el-option 的唯一标识符为频道的 id -->
     <!-- [:label="channel.cate_name"]: 设置显示在下拉框中的文本为频道的 cate_name 属性 -->
