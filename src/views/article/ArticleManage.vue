@@ -8,11 +8,14 @@ import ChannelSelect from './components/ChannelSelect.vue'
 import { artGetArticleListService } from '@/api/article/article.js'
 // 导入封装格式化日期函数
 import { formatTime } from '@/utils/format.js'
-// 导入 Loading 服务
-import { ElLoading } from 'element-plus'
+
 import ArticleEdit from './components/ArticleEdit.vue'
 // 导入删除文章接口
 import { artDelService } from '@/api/article/article.js'
+
+const articleList = ref([]) //文章列表数据，初始为空数组
+const total = ref(0) // 总文章数量，初始为0
+const loading = ref(false)
 
 // 定义请求参数对象
 const params = ref({
@@ -23,20 +26,8 @@ const params = ref({
   state: '' // 文章状态，初始为空
 })
 
-const articleList = ref([]) //文章列表数据，初始为空数组
-const total = ref(0) // 总文章数量，初始为0
-const loading = ref(false)
-
 const getArticleList = async () => {
-  const loading = ElLoading.service({
-    // 加载数据时显示全屏 "loading" 动画
-    lock: true,
-    text: 'Loading',
-    background: 'rgba(0, 0, 0, 0.7)'
-  })
-  setTimeout(() => {
-    loading.close()
-  }, 2000)
+  loading.value = true
   // 发送获取文章列表的请求
   const res = await artGetArticleListService(params.value)
   // 将返回的数据赋值给articleList和total
