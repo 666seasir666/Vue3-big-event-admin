@@ -5,7 +5,7 @@ import ChannelSelect from './ChannelSelect.vue'
 // 导入Plus图标
 import { Plus } from '@element-plus/icons-vue'
 // 导入QuillEditor组件
-import { defineEmits } from 'vue'
+import { QuillEditor } from '@vueup/vue-quill'
 
 // 导入QuillEditor的样式
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
@@ -20,7 +20,7 @@ import { baseURL } from '@/utils/request.js'
 // 导入axios库进行网络请求
 import axios from 'axios'
 
-const visbleDrawer = ref(false) // 控制添加管理弹窗的显示与隐藏
+const visibleDrawer = ref(false) // 控制添加管理弹窗的显示与隐藏
 
 // 默认数据
 const defaultFrom = {
@@ -65,22 +65,21 @@ const onPublish = async (state) => {
     // 表示是编辑操作
     await artEditService(fd) // 调用发布文章接口
     ElMessage.success('编辑成功')
-    visbleDrawer.value = false // 关闭弹窗
+    visibleDrawer.value = false // 关闭弹窗
     emit('success', 'edit') // 通知父组件，添加成功
   } else {
     // 添加请求
     await artPublishService(fd) // 调用编辑文章接口
     ElMessage.success('添加成功')
-    visbleDrawer.value = false // 关闭弹窗
+    visibleDrawer.value = false // 关闭弹窗
     emit('success', 'add') // 通知父组件，添加成功
   }
 }
 
-const formRef = ref()
-const editorRef = ref()
+const editorRef = ref() // 定义并初始化ref
 
 const open = async (row) => {
-  visbleDrawer.value = true // 显示弹窗
+  visibleDrawer.value = true // 显示弹窗
   if (row.id) {
     // 如果有id，则表示是编辑操作
     const res = await artGetDetailService(row.id)
@@ -90,10 +89,11 @@ const open = async (row) => {
     imgUrl.value = baseURL + formModel.value.cover_img
     // 提交给后台，需要的是 file 格式的，将网络图片，转成 file 格式
     // 网络图片转成 file 对象, 需要转换一下
-    formModel.value.cover_img = await imageUrlToFile(
+    const file = await imageUrlToFileObject(
       imgUrl.value,
       formModel.value.cover_img
     )
+    formModel.value.cover_img = file
   } else {
     // 如果没有id，则表示是添加操作
     formModel.value = { ...defaultFrom }
@@ -103,7 +103,7 @@ const open = async (row) => {
 }
 
 // 将网络图片地址转换为File对象
-async function imageUrlToFile(url, fileName) {
+async function imageUrlToFileObject(url, fileName) {
   try {
     // 第一步：使用axios获取网络图片数据
     const response = await axios.get(url, { responseType: 'arraybuffer' })
@@ -132,7 +132,7 @@ defineExpose({
 <template>
   <!-- 添加文章弹窗 -->
   <el-dialog
-    v-model="visbleDrawer"
+    v-model="visibleDrawer"
     title="添加管理标题"
     width="50%"
     :draggable="false"
