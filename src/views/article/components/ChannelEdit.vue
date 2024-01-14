@@ -40,7 +40,7 @@ const open = async (row) => {
   }
 } // 定义打开对话框方法
 
-const emit = defineEmits(['success']) // 定义触发父组件事件的方法
+const emit = defineEmits(['success']) // 定义自定义事件，用于向父组件发送成功事件
 const onSubmit = async () => {
   try {
     await formRef.value.validate() // 表单验证
@@ -57,7 +57,7 @@ const onSubmit = async () => {
     dialogVisible.value = false // 关闭对话框
     emit('success') // 触发自定义事件，传递数据给父组件
   } catch (error) {
-    ElMessage.error('请检查您的输入信息是否正确')
+    ElMessage.error('信息不正确')
   }
 } // 定义提交表单事件
 

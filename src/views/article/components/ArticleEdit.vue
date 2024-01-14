@@ -21,6 +21,8 @@ import { baseURL } from '@/utils/request.js'
 // 导入axios库进行网络请求
 import axios from 'axios'
 
+const formRef = ref(null) // 创建表单的引用
+
 const visibleDrawer = ref(false) // 控制添加管理弹窗的显示与隐藏
 
 // 默认数据
@@ -50,30 +52,40 @@ const onUploadFile = (uploadFile) => {
 }
 
 // 发布文章
-const emit = defineEmits(['success'])
+const emit = defineEmits(['success']) // 定义自定义事件，用于向父组件发送成功事件
 const onPublish = async (state) => {
-  // 将已发布还是草稿状态，存入 state
-  formModel.value.state = state
+  try {
+    // 首先调用 el-form 的校验方法
+    const valid = await formRef.value.validate()
 
-  // 转换 formData 数据
-  const fd = new FormData()
-  // 遍历formModel.value，把每一项的key和value添加到fd中
-  for (let key in formModel.value) {
-    fd.append(key, formModel.value[key])
-  }
+    // 如果校验通过，则执行发布逻辑
+    if (valid) {
+      // 将已发布还是草稿状态，存入 state
+      formModel.value.state = state
 
-  if (formModel.value.id) {
-    // 表示是编辑操作
-    await artEditService(fd) // 调用发布文章接口
-    ElMessage.success('编辑成功')
-    visibleDrawer.value = false // 关闭弹窗
-    emit('success', 'edit') // 通知父组件，添加成功
-  } else {
-    // 添加请求
-    await artPublishService(fd) // 调用编辑文章接口
-    ElMessage.success('添加成功')
-    visibleDrawer.value = false // 关闭弹窗
-    emit('success', 'add') // 通知父组件，添加成功
+      // 转换 formData 数据
+      const fd = new FormData()
+      // 遍历 formModel.value，把每一项的 key 和 value 添加到 fd 中
+      for (let key in formModel.value) {
+        fd.append(key, formModel.value[key])
+      }
+
+      if (formModel.value.id) {
+        // 表示是编辑操作
+        await artEditService(fd) // 调用发布文章接口
+        ElMessage.success('编辑成功')
+        visibleDrawer.value = false // 关闭弹窗
+        emit('success', 'edit') // 通知父组件，编辑成功
+      } else {
+        // 添加请求
+        await artPublishService(fd) // 调用编辑文章接口
+        ElMessage.success('添加成功')
+        visibleDrawer.value = false // 关闭弹窗
+        emit('success', 'add') // 通知父组件，添加成功
+      }
+    }
+  } catch (error) {
+    ElMessage.error('信息不正确')
   }
 }
 
@@ -103,6 +115,11 @@ const open = async (row) => {
     // 使用 nextTick 确保组件已经渲染完成
     await nextTick()
     editorRef.value.setHTML('') // 重置富文本编辑器内容
+  }
+
+  // 在打开弹窗时，重置表单校验提示
+  if (formRef.value) {
+    formRef.value.resetFields()
   }
 }
 
