@@ -157,7 +157,7 @@ const handleCommand = async (key) => {
       <el-main>
         <router-view></router-view>
       </el-main>
-      <el-footer>Seasir ©2023 Created by 肥仔的春天</el-footer>
+      <el-footer>SeasirHyde ©2024 Created by 原神，启动！</el-footer>
     </el-container>
   </el-container>
 </template>
