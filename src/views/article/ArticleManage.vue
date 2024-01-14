@@ -86,6 +86,23 @@ const onEditArticle = (row) => {
 const onDeleteArticle = (row) => {
   console.log('删除文章', row)
 }
+
+// 添加或者编辑成功回调
+const onSuccess = (type) => {
+  if (type === 'add') {
+    // 如果是添加，需要跳转渲染最后一页
+    const lastPage = Math.ceil((total.value + 1) / params.value.pagesize)
+
+    // 如果当前页码不等于最后一页，才更新页码
+    if (params.value.pagenum !== lastPage) {
+      params.value.pagenum = lastPage
+      getArticleList()
+    }
+  } else {
+    // 如果是编辑，直接渲染当前页
+    getArticleList()
+  }
+}
 </script>
 
 <template>
@@ -170,7 +187,7 @@ const onDeleteArticle = (row) => {
       style="margin-top: 20px; justify-content: center"
     />
     <!-- 添加文章弹窗 -->
-    <ArticleEdit ref="articleEditRef"></ArticleEdit>
+    <ArticleEdit ref="articleEditRef" @success="onSuccess"></ArticleEdit>
   </PageContainer>
 </template>
 
