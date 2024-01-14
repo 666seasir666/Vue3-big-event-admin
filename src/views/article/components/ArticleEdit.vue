@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 // 导入ChannelSelect组件
 import ChannelSelect from './ChannelSelect.vue'
+
 // 导入Plus图标
 import { Plus } from '@element-plus/icons-vue'
 // 导入QuillEditor组件
@@ -98,6 +99,9 @@ const open = async (row) => {
     // 如果没有id，则表示是添加操作
     formModel.value = { ...defaultFrom }
     imgUrl.value = '' // 重置表单数据
+
+    // 使用 nextTick 确保组件已经渲染完成
+    await nextTick()
     editorRef.value.setHTML('') // 重置富文本编辑器内容
   }
 }
