@@ -137,7 +137,7 @@ defineExpose({
   <!-- 添加文章弹窗 -->
   <el-dialog
     v-model="visibleDrawer"
-    title="添加管理标题"
+    :title="formModel.id ? '编辑文章' : '添加文章'"
     width="50%"
     :draggable="false"
     :align-center="true"
@@ -150,7 +150,7 @@ defineExpose({
       ref="formRef"
       label-width="100px"
     >
-      <el-form-item label="标题名称:" prop="title">
+      <el-form-item label="文章标题:" prop="title">
         <el-input
           v-model="formModel.title"
           placeholder="请输入文章标题"
