@@ -175,6 +175,8 @@ watch(isRegister, () => {
         </el-form-item>
         <el-form-item prop="password">
           <el-input
+            clearable
+            show-password
             v-model="formModel.password"
             name="password"
             :prefix-icon="Lock"
@@ -184,7 +186,9 @@ watch(isRegister, () => {
         </el-form-item>
         <el-form-item class="flex">
           <div class="flex">
-            <el-checkbox>记住我</el-checkbox>
+            <el-checkbox :validate-event="true" :checked="true"
+              >记住我</el-checkbox
+            >
             <el-link type="primary" :underline="false">忘记密码？</el-link>
           </div>
         </el-form-item>
