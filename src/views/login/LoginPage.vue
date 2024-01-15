@@ -102,7 +102,7 @@ watch(isRegister, () => {
 <template>
   <el-row class="login-page">
     <el-col :span="12" class="bg"></el-col>
-    <el-col :span="4" :offset="3" class="form">
+    <el-col :span="6" :offset="6" class="form">
       <!-- 注册表单 -->
       <el-form
         :model="formModel"
@@ -114,7 +114,7 @@ watch(isRegister, () => {
         class="zhuce"
       >
         <el-form-item>
-          <div class="User_Registration">注册</div>
+          <el-text class="mx-1" type="primary">注册</el-text>
         </el-form-item>
         <el-form-item prop="username">
           <el-input
@@ -125,6 +125,8 @@ watch(isRegister, () => {
         </el-form-item>
         <el-form-item prop="password">
           <el-input
+            clearable
+            show-password
             v-model="formModel.password"
             :prefix-icon="Lock"
             type="password"
@@ -133,6 +135,8 @@ watch(isRegister, () => {
         </el-form-item>
         <el-form-item prop="repassword">
           <el-input
+            clearable
+            show-password
             v-model="formModel.repassword"
             :prefix-icon="Lock"
             type="password"
@@ -164,7 +168,7 @@ watch(isRegister, () => {
         v-else
       >
         <el-form-item>
-          <h1>登录</h1>
+          <el-text class="mx-1" type="primary">登录</el-text>
         </el-form-item>
         <el-form-item prop="username">
           <el-input
@@ -214,47 +218,57 @@ watch(isRegister, () => {
 <style lang="scss" scoped>
 .login-page {
   height: 100vh;
-  // background-color: #58feb9;
   background: url(http://localhost:5173/src/assets/login_bg.jpg);
   background-size: cover;
   justify-content: center;
-  // .bg {
-  //   background:
-  //     // url('@/assets/logo2.png') no-repeat 60% center / 240px auto,
-  //     url('@/assets/login_bg.jpg') no-repeat left / cover;
 
-  //   border-radius: 0 20px 20px 0;
-  // }
   .form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     user-select: none;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(8px); /* 添加模糊背景 */
 
     .title {
       margin: 0 auto;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
     }
 
     .button {
+      margin-top: 20px;
       width: 100%;
+      border-radius: 5px;
     }
 
     .flex {
+      margin-top: 10px;
       width: 100%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+
+        .el-checkbox {
+          margin-right: 5px;
+        }
+      }
+
+      .forgot-password {
+        font-size: 14px;
+        color: #666;
+      }
     }
   }
-
-  .zhuce {
-    background: rgba(255, 255, 255, 0.24);
-    backdrop-filter: blur(8px);
-    border-radius: 22px;
-    justify-content: center;
-  }
-
-  .User_Registration {
-    justify-content: center;
+  .mx-1 {
+    font-size: 30px;
   }
 }
 </style>
