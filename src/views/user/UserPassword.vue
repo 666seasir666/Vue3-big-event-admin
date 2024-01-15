@@ -7,7 +7,9 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores' //导入stores下面的用户仓库
 
 const formRef = ref()
+// 获取路由实例
 const router = useRouter()
+// 获取用户状态
 const userStore = useUserStore()
 
 const onSubmit = async () => {
@@ -117,9 +119,16 @@ const rules = {
           <el-form-item label="确认密码：" prop="re_pwd">
             <el-input v-model="pwdForm.re_pwd" type="password"></el-input>
           </el-form-item>
-          <el-form-item>
-            <el-button @click="onSubmit" type="primary">修改密码</el-button>
-            <el-button @click="onReset">重置</el-button>
+          <el-form-item style="display: flex; justify-content: flex-end">
+            <el-button @click="onReset" style="margin-left: 130px"
+              >重置</el-button
+            >
+            <el-button
+              @click="onSubmit"
+              type="primary"
+              style="margin-left: auto"
+              >修改密码</el-button
+            >
           </el-form-item>
         </el-form>
       </el-col>
