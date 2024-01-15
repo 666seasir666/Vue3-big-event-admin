@@ -111,13 +111,25 @@ const rules = {
           size="large"
         >
           <el-form-item label="原始密码：" prop="old_pwd">
-            <el-input v-model="pwdForm.old_pwd" type="password"></el-input>
+            <el-input
+              show-password
+              v-model="pwdForm.old_pwd"
+              type="password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="新的密码：" prop="new_pwd">
-            <el-input v-model="pwdForm.new_pwd" type="password"></el-input>
+            <el-input
+              show-password
+              v-model="pwdForm.new_pwd"
+              type="password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="确认密码：" prop="re_pwd">
-            <el-input v-model="pwdForm.re_pwd" type="password"></el-input>
+            <el-input
+              show-password
+              v-model="pwdForm.re_pwd"
+              type="password"
+            ></el-input>
           </el-form-item>
           <el-form-item style="display: flex; justify-content: flex-end">
             <el-button @click="onReset" style="margin-left: 130px"
@@ -126,7 +138,7 @@ const rules = {
             <el-button
               @click="onSubmit"
               type="primary"
-              style="margin-left: auto"
+              style="margin-left: 10px"
               >修改密码</el-button
             >
           </el-form-item>
