@@ -48,7 +48,7 @@ const onSizeChange = (size) => {
 
 // 处理页码逻辑
 const onCurrentChange = (page) => {
-  params.value.pagesize = page // 更新当前页码
+  params.value.pagenum = page // 更新当前页码
   getArticleList() // 重新获取文章列表
 }
 
