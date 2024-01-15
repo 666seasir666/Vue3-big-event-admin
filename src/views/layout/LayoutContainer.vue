@@ -68,6 +68,11 @@ const handleCommand = async (key) => {
     router.push(`/user/${key}`)
   }
 }
+
+// 跳转到github 【666seasir666】用户名
+const githubUsername = () => {
+  window.location.href = 'https://github.com/666seasir666'
+}
 </script>
 
 <template>
@@ -76,7 +81,7 @@ const handleCommand = async (key) => {
     <!-- 侧边栏开始 -->
     <el-aside width="200px">
       <!-- 侧边栏头像 -->
-      <div class="el-aside__logo"></div>
+      <div class="el-aside__logo" @click="githubUsername"></div>
       <!-- 侧边栏菜单 -->
       <el-menu
         active-text-color="#ffd04b"
@@ -200,6 +205,9 @@ const handleCommand = async (key) => {
     justify-content: center;
     font-size: 14px;
     color: #666;
+  }
+  .el-aside__logo {
+    cursor: pointer;
   }
 }
 </style>

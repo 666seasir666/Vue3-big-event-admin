@@ -20,7 +20,7 @@ const onSubmit = async () => {
     // 调用用户更新密码服务
     await userUpdatePassService(pwdForm.value)
     // 弹出提示框
-    ElMessage({ type: 'success', message: '更换密码成功' })
+    ElMessage({ type: 'success', message: '修改密码成功！' })
     // 更新用户token和用户信息
     userStore.setToken('')
     userStore.setUser({})

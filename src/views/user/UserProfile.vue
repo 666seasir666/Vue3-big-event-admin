@@ -46,7 +46,7 @@ const onSubmit = async () => {
 <template>
   <page-container title="基本资料">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="6">
         <el-form
           :model="userInfo"
           :rules="rules"
@@ -64,7 +64,12 @@ const onSubmit = async () => {
             <el-input v-model="userInfo.email"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button @click="onSubmit" type="primary">提交修改</el-button>
+            <el-button
+              style="margin-left: 214px"
+              @click="onSubmit"
+              type="primary"
+              >提交修改</el-button
+            >
           </el-form-item>
         </el-form>
       </el-col>

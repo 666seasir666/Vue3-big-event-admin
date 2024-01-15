@@ -66,6 +66,7 @@ const onUpdateAvatar = async () => {
           选择图片
         </el-button>
         <el-button
+          style="margin-left: 44px"
           @click="onUpdateAvatar"
           type="success"
           :icon="Upload"
