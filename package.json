@@ -14,27 +14,27 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
     "@vueup/vue-quill": "^1.2.0",
-    "axios": "^1.6.3",
-    "element-plus": "^2.4.4",
+    "axios": "^1.6.5",
+    "element-plus": "^2.5.2",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
-    "vue": "^3.4.3",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.6.1",
-    "@vitejs/plugin-vue": "^4.6.1",
+    "@rushstack/eslint-patch": "^1.7.0",
+    "@vitejs/plugin-vue": "^4.6.2",
     "@vue/eslint-config-prettier": "^8.0.0",
     "eslint": "^8.56.0",
-    "eslint-plugin-vue": "^9.19.2",
+    "eslint-plugin-vue": "^9.20.1",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
-    "prettier": "^3.1.1",
-    "sass": "^1.69.6",
+    "prettier": "^3.2.4",
+    "sass": "^1.70.0",
     "unplugin-auto-import": "^0.17.3",
     "unplugin-vue-components": "^0.25.2",
-    "vite": "^4.5.1"
+    "vite": "^4.5.2"
   },
   "lint-staged": {
     "*.{js,ts,vue}": [
