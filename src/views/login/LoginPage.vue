@@ -218,7 +218,7 @@ watch(isRegister, () => {
 <style lang="scss" scoped>
 .login-page {
   height: 100vh;
-  background: url(http://localhost:5173/src/assets/login_bg.jpg);
+  background: url(/src/assets/login_bg.jpg);
   background-size: cover;
   justify-content: center;
 
